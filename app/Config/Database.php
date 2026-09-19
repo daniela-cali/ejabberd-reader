@@ -24,12 +24,12 @@ class Database extends Config
      *
      * @var array<string, mixed>
      */
+    
     public array $default = [
-        'DSN'          => '',
         'hostname'     => 'localhost',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
+        'username'     => 'ejabberd_reader',
+        'password'     => 'EjabberdReader2026',
+        'database'     => 'ejabberd_reader',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -51,27 +51,29 @@ class Database extends Config
         ],
     ];
 
-    //    /**
-    //     * Sample database connection for SQLite3.
-    //     *
-    //     * @var array<string, mixed>
-    //     */
-    //    public array $default = [
-    //        'database'    => 'database.db',
-    //        'DBDriver'    => 'SQLite3',
-    //        'DBPrefix'    => '',
-    //        'DBDebug'     => true,
-    //        'swapPre'     => '',
-    //        'failover'    => [],
-    //        'foreignKeys' => true,
-    //        'busyTimeout' => 1000,
-    //        'synchronous' => null,
-    //        'dateFormat'  => [
-    //            'date'     => 'Y-m-d',
-    //            'datetime' => 'Y-m-d H:i:s',
-    //            'time'     => 'H:i:s',
-    //        ],
-    //    ];
+    /**
+     * Legacy SQLite3 archive, kept alongside the default MySQL connection.
+     *
+     * @var array<string, mixed>
+     */
+    public array $secondary = [
+        'DSN'         => '',
+        'database'    => WRITEPATH . 'database' . DIRECTORY_SEPARATOR . 'miranda.db',
+        'DBDriver'    => 'SQLite3',
+        'DBPrefix'    => '',
+        'pConnect'    => false,
+        'DBDebug'     => true,
+        'swapPre'     => '',
+        'failover'    => [],
+        'foreignKeys' => true,
+        'busyTimeout' => 1000,
+        'synchronous' => null,
+        'dateFormat'  => [
+            'date'     => 'Y-m-d',
+            'datetime' => 'Y-m-d H:i:s',
+            'time'     => 'H:i:s',
+        ],
+    ];
 
     //    /**
     //     * Sample database connection for Postgre.
