@@ -1,69 +1,47 @@
-# CodeIgniter 4 Application Starter
+# Analisi sommaria
+Il progetto presuppone la possibilità di leggere uno storico di chat archiviate su un server xmpp.
+La login verrà effettuata sul database mySQL ejabberd_reader utilizzando CI4 Shield.
+I vari settings rimarrano su tale database.
+Lo storico chat reale sarà sul database ejabberd.db attualmente in writable (vedi sotto appunto sul collegamento a quello operativo già WAL).
 
-## What is CodeIgniter?
+Le chat visualizzate saranno richieste sulla base dell'utente loggato, pertanto ogni utente associerà a se stesso uno username letto dalla tabella users di ejabberd.db che fungerà da chiave per filtrare il diario personale e intercettare tutti i bare_peer con cui si è scambiati messaggi.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+Una volta selezionato il bare_peer il software andrà a leggere tutto l'elenco di messaggi con quell'utente e visualizzerà un albero di date/chat che permetterà di interagire per poter visualizzare la chat del il giorno selezionato.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Stack tecnologico ambiente DEV
+- PHP v8.4.25
+- Codeigniter v4.7.4
+- AdminLTE 4 v4.9.1  
+- Bootstrap v5.3.8
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Database
+### Default 
+il database principale dell'applicazione, con gestione utenti di Shield, login, permessi ed eventualmente in futuro i settings
+### Secondary
+il database sqlite3 di ejabberd contenente uno storico chat unificato tra due diverse VPS con storia dal 2016 con interruzione logging nel 2023 e ripresa nel 2026 con adozione nuova VPS personale con MAM attivato. Al momento il database vive dentro writeable in quanto non ho ancora identificato il modo per poterlo collegare al vero database sqlite3 in /var/lib/ejabberd/ejabberd.db che è già predisposto con [journal WAL](https://www.sqlite.org/wal.html)
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+# Roadmap di sviluppo/changelog
 
-## Installation & updates
+## [v0.0.1]
+- Inizializzazione progetto con CI4
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## [v0.0.2]
+- AdmiLTE4 via CDN
+- Creazione Adminseeder
+- Aggiunta sistema di Shield con migrazione
+```console
+> php spark migrate --all
+```
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+## [v0.0.3]
+- Creazione README.md aggiornato
+- Login personalizzata con layout auth
+- Partial per gli alert condiviso dai layout
+- CSS custom per img brand in login
+- Aggiunto immagini del software (ejabberd e miranda) in public images con formato webp
+- Aggiornata favicon con icona Miranda
+- Aggiunto filtri di login e csrf
+- Installato translation ufficiali CI4 e impostato default locale it
+- Login Shield funzionante
 
-## Setup
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
-
-## Important Change with index.php
-
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
-
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
-
-**Please** read the user guide for a better explanation of how CI4 works!
-
-## Repository Management
-
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
-
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Server Requirements
-
-PHP version 8.2 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library

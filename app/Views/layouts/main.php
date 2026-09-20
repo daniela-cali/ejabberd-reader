@@ -17,7 +17,9 @@
 
         <!-- Header -->
         <?= $this->include('layouts/partials/navbar') ?>
-
+        
+        <?= $this->include('layouts/partials/alerts') ?>
+        
         <!-- Sidebar -->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
             <div class="sidebar-brand">
