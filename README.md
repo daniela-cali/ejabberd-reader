@@ -44,4 +44,13 @@ il database sqlite3 di ejabberd contenente uno storico chat unificato tra due di
 - Installato translation ufficiali CI4 e impostato default locale it
 - Login Shield funzionante
 
+## [v0.0.4]
+- Disabilitazione registrazione
+- Sistemazione gruppi presenti, adattamento matrici
+- Aggiunta campo custom 'ejabberd_nick' con migrazione ad hoc
+- Creazione UserModel come nuovo userProvider per campi custom
+- Gestione completa utenti (namespace Admin):
+    - CRUD completo di gestione con gruppi, assegnazione e rimozione
+    - Controller dedicato e view dedicate con gestione superadmin/admin
+
 
